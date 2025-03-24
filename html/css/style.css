@@ -1,0 +1,338 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: url('/mnt/data/image.png') no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.container-custom {
+    display: none;
+    width: 100%;
+    max-width: 840px;
+    max-height: 90vh;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgb(44, 44, 44);
+    color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: rgb(2 255 138 / 50%) 0px 0px 10px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.navbar .navbar-brand {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.navbar-nav .nav-link {
+    background-color: #0097b2; /* Color cambiado */
+    color: #ffffff;
+    margin-right: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    background-color: #7ed957; /* Color cambiado */
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(126, 217, 87, 0.5); /* Sombra acorde al color nuevo */
+}
+
+/* Estilo para números destacados en las tarjetas */
+.card-text {
+    font-size: 20px; /* Tamaño más grande para destacarlos */
+    font-weight: bold;
+    color: #7ed957; /* Color destacado */
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra para resaltarlos */
+}
+
+/* Personaliza el color de dinero de la sociedad */
+#societyMoney {
+    color: #7ed957; /* Color del dinero */
+    font-size: 20px; /* Tamaño más grande */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para resaltar */
+}
+
+/* Estilo para resaltar el número de empleados */
+#totalEmployees {
+    color: #7ed957; /* Color del número de empleados */
+    font-size: 20px; /* Tamaño más grande */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para resaltar */
+}
+
+/* Estilo para resaltar el número de empleados en servicio */
+#onlineNow {
+    color: #7ed957; /* Color del número de empleados en servicio */
+    font-size: 20px; /* Tamaño más grande */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para resaltar */
+}
+
+/* Estilo para resaltar el rango */
+#yourRank {
+    color: #7ed957; /* Color del rango del jugador */
+    font-size: 20px; /* Tamaño más grande */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para resaltar */
+}
+
+.tab-content .card {
+    background-color: #444;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.tab-content .card .card-title {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.tab-content .card .card-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0097b2; /* Color cambiado */
+    margin: 0;
+}
+
+.tab-content .card .card-text + span {
+    font-size: 14px;
+    color: #aaaaaa;
+}
+
+.charts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.charts canvas {
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.list-group-item {
+    background-color: #444;
+    border: 1px solid #555;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.list-group-item:hover {
+    background-color: #555;
+}
+
+.list-group-item .actions {
+    display: flex;
+    gap: 10px;
+}
+
+.list-group-item .action-btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.list-group-item .action-btn.action-promote {
+    background-color: #27ae60;
+}
+
+.list-group-item .action-btn.action-promote:hover {
+    background-color: #2ecc71;
+}
+
+.list-group-item .action-btn.action-demote {
+    background-color: #e67e22;
+}
+
+.list-group-item .action-btn.action-demote:hover {
+    background-color: #d35400;
+}
+
+.list-group-item .action-btn.action-fire {
+    background-color: #c0392b;
+}
+
+.list-group-item .action-btn.action-fire:hover {
+    background-color: #e74c3c;
+}
+
+.btn-custom {
+    background-color: #0097b2; /* Color cambiado */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: #7ed957; /* Color cambiado */
+}
+
+.input-group-text-custom {
+    background-color: #444;
+    color: #ffffff;
+    border: 1px solid #444;
+}
+
+.form-control-custom {
+    background-color: #222;
+    color: #ffffff;
+    border: 1px solid #444;
+}
+
+.modal-content-custom {
+    background-color: #2c2c2c;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+.modal-content-custom .modal-header,
+.modal-content-custom .modal-footer {
+    border-color: #444;
+}
+
+.modal-content-custom .close {
+    color: #ffffff;
+}
+
+.action-bonus {
+    background-color: #9b59b6;
+}
+
+.action-bonus:hover {
+    background-color: #8e44ad;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #2c2c2c;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 10px;
+    border: 3px solid #2c2c2c;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #0097b2; /* Color cambiado */
+}
+
+/* Firefox scrollbar */
+.scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #444 #2c2c2c;
+}
+
+.scrollbar-track {
+    background: #2c2c2c;
+    border-radius: 10px;
+}
+
+.scrollbar-thumb {
+    background-color: #444;
+    border-radius: 10px;
+    border: 3px solid #2c2c2c;
+}
+
+.scrollbar-thumb:hover {
+    background-color: #0097b2; /* Color cambiado */
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+    .container-custom {
+        max-width: 700px; /* Ajuste del ancho en pantallas medianas */
+    }
+    .navbar-nav .nav-link {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    .tab-content .card .card-text {
+        font-size: 20px;
+    }
+    .tab-content .card .card-title {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container-custom {
+        max-width: 600px;
+    }
+    .navbar .navbar-brand {
+        font-size: 20px;
+    }
+    .navbar-nav .nav-link {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    .tab-content .card .card-text {
+        font-size: 16px;
+    }
+    .tab-content .card .card-title {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-custom {
+        max-width: 100%;
+        padding: 10px;
+    }
+    .navbar .navbar-brand {
+        font-size: 18px;
+    }
+    .navbar-nav .nav-link {
+        padding: 5px 8px;
+        font-size: 10px;
+    }
+    .tab-content .card {
+        padding: 10px;
+    }
+    .tab-content .card .card-text {
+        font-size: 14px;
+    }
+    .tab-content .card .card-title {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,11 @@
+CREATE TABLE attendance (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    citesmid VARCHAR(50) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    job VARCHAR(50) NOT NULL,
+    total_time INT(11) DEFAULT NULL,
+    timestamp TIMESTAMP NULL DEFAULT NULL,
+    start_time VARCHAR(255) DEFAULT NULL,
+    end_time VARCHAR(255) DEFAULT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
