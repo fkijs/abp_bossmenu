@@ -84,10 +84,10 @@ function closeBonusModal() {
     $('#bonusModal').modal('hide'); // Requiere jQuery y Bootstrap
 }
 
-// Función para otorgar un bono
 function giveBonus() {
     const citizenid = document.getElementById('bonusCitizenId').value;
     const bonusAmount = document.getElementById('bonusModalAmount').value;
+
     if (citizenid && bonusAmount) {
         fetch(`https://abp_bossmenu/giveBonus`, {
             method: 'POST',
@@ -97,21 +97,22 @@ function giveBonus() {
             body: JSON.stringify({ citizenid: citizenid, bonusAmount: parseInt(bonusAmount) }),
         })
         .then(response => {
-            if (response.ok) {
-                closeBonusModal();
-                return response.json();
-            } else {
-                throw new Error('Error giving bonus');
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
             }
+            return response; // No necesitamos .json() si el servidor no devuelve JSON
         })
-        .then(data => {
-            if (data.success) {
-                console.log('Bono otorgado exitosamente');
-            } else {
-                console.log('Error al otorgar bono');
-            }
+        .then(() => {
+            closeBonusModal();
+            // La notificación se manejará desde el evento 'nwd_bossmenu:notify'
         })
-        .catch(error => console.error('Error giving bonus:', error.message, error));
+        .catch(error => {
+            console.error('Error giving bonus:', error.message, error);
+            // La notificación de error también vendrá del servidor
+        });
+    } else {
+        sendNotification('Citizen ID or bonus amount missing', 'error');
+        console.error('Faltan datos: citizenid o bonusAmount');
     }
 }
 

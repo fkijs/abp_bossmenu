@@ -2,40 +2,68 @@ local QBCore = exports['qb-core']:GetCoreObject()
 local isPlayerBossCode = LoadResourceFile(GetCurrentResourceName(), 'server/functions/IsPlayerBoss.lua')
 local IsPlayerBoss = assert(load(isPlayerBossCode))()
 
-RegisterNetEvent('bossmenu:giveBonus')
-AddEventHandler('bossmenu:giveBonus', function(citizenid, bonusAmount)
+RegisterNetEvent('nwd_bossmenu:giveBonus') -- Corregido el nombre del evento
+AddEventHandler('nwd_bossmenu:giveBonus', function(data) -- Cambiado a recibir un objeto 'data'
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     
-    if Player then
-        if IsPlayerBoss(Player) then
-            local targetPlayer = QBCore.Functions.GetPlayerByCitizenId(citizenid)
-            if targetPlayer then
-                local jobName = Player.PlayerData.job.name
-                local societyAccountBalance = tonumber(exports['Renewed-Banking']:getAccountMoney(jobName)) -- Convertir a número
-                bonusAmount = tonumber(bonusAmount) -- Asegurarse de que bonusAmount es un número
+    if not Player then
+        return -- Evitar errores si el jugador no existe
+    end
 
-                if societyAccountBalance and societyAccountBalance >= bonusAmount then
-                    local removeMoneySuccess = exports['Renewed-Banking']:removeAccountMoney(jobName, bonusAmount)
+    if not IsPlayerBoss(Player) then
+        TriggerClientEvent('QBCore:Notify', src, Config.Notifications.NoPermisionBonus, 'error')
+        TriggerClientEvent('nwd_bossmenu:notify', src, { message = Config.Notifications.NoPermisionBonus, type = 'error' })
+        return
+    end
 
-                    if removeMoneySuccess then
-                        targetPlayer.Functions.AddMoney('bank', bonusAmount)
-                        TriggerClientEvent('QBCore:Notify', src, 'Bono otorgado exitosamente', 'success')
-                        TriggerClientEvent('QBCore:Notify', targetPlayer.PlayerData.source, 'Has recibido un bono de $' .. bonusAmount, 'success')
+    local citizenid = data.citizenid
+    local bonusAmount = tonumber(data.bonusAmount)
 
-                        -- Log the transaction
-                        exports['Renewed-Banking']:handleTransaction(jobName, 'Bonificación', bonusAmount, 'Bono otorgado a ' .. targetPlayer.PlayerData.name, Player.PlayerData.name, targetPlayer.PlayerData.name, 'withdraw')
-                    else
-                        TriggerClientEvent('QBCore:Notify', src, 'Error al retirar dinero de la cuenta de la sociedad', 'error')
-                    end
-                else
-                    TriggerClientEvent('QBCore:Notify', src, 'Fondos insuficientes en la cuenta de la sociedad', 'error')
-                end
-            else
-                TriggerClientEvent('QBCore:Notify', src, 'Jugador no encontrado', 'error')
-            end
-        else
-            TriggerClientEvent('QBCore:Notify', src, 'No tienes permisos para dar bonos', 'error')
-        end
+    if not citizenid or not bonusAmount or bonusAmount <= 0 then
+        TriggerClientEvent('QBCore:Notify', src, 'Invalid citizen ID or bonus amount', 'error')
+        TriggerClientEvent('nwd_bossmenu:notify', src, { message = 'Invalid citizen ID or bonus amount', type = 'error' })
+        return
+    end
+
+    local targetPlayer = QBCore.Functions.GetPlayerByCitizenId(citizenid)
+    if not targetPlayer then
+        TriggerClientEvent('QBCore:Notify', src, Config.Notifications.PlayerNotFound, 'error')
+        TriggerClientEvent('nwd_bossmenu:notify', src, { message = Config.Notifications.PlayerNotFound, type = 'error' })
+        return
+    end
+
+    local jobName = Player.PlayerData.job.name
+    local societyAccountBalance = tonumber(exports['Renewed-Banking']:getAccountMoney(jobName))
+
+    if not societyAccountBalance or societyAccountBalance < bonusAmount then
+        TriggerClientEvent('QBCore:Notify', src, Config.Notifications.InsuficientMoneySociety, 'error')
+        TriggerClientEvent('nwd_bossmenu:notify', src, { message = Config.Notifications.InsuficientMoneySociety, type = 'error' })
+        return
+    end
+
+    -- Intentar retirar dinero de la sociedad
+    exports['Renewed-Banking']:removeAccountMoney(jobName, bonusAmount)
+    -- Verificar si el saldo disminuyó correctamente (Renewed-Banking no devuelve éxito explícito)
+    local newBalance = tonumber(exports['Renewed-Banking']:getAccountMoney(jobName))
+    if newBalance and newBalance == societyAccountBalance - bonusAmount then
+        targetPlayer.Functions.AddMoney('bank', bonusAmount, 'Bonus from boss')
+        TriggerClientEvent('QBCore:Notify', src, Config.Notifications.BonusSuccess, 'success')
+        TriggerClientEvent('QBCore:Notify', targetPlayer.PlayerData.source, 'You received a bonus of $' .. bonusAmount, 'success')
+        TriggerClientEvent('nwd_bossmenu:notify', src, { message = Config.Notifications.BonusSuccess, type = 'success' })
+
+        -- Registrar la transacción
+        exports['Renewed-Banking']:handleTransaction(
+            jobName,
+            'Bonus',
+            bonusAmount,
+            'Bonus granted to ' .. targetPlayer.PlayerData.charinfo.firstname .. ' ' .. targetPlayer.PlayerData.charinfo.lastname,
+            Player.PlayerData.charinfo.firstname .. ' ' .. Player.PlayerData.charinfo.lastname,
+            targetPlayer.PlayerData.charinfo.firstname .. ' ' .. targetPlayer.PlayerData.charinfo.lastname,
+            'withdraw'
+        )
+    else
+        TriggerClientEvent('QBCore:Notify', src, 'Error withdrawing money from society account', 'error')
+        TriggerClientEvent('nwd_bossmenu:notify', src, { message = 'Error withdrawing money from society account', type = 'error' })
     end
 end)
