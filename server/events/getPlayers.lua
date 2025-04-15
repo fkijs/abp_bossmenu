@@ -27,7 +27,5 @@ AddEventHandler('bossmenu:getPlayers', function()
 
         debugPrint('Enviando jugadores a cliente: ' .. json.encode(players))
         TriggerClientEvent('bossmenu:setPlayers', src, players)
-    else
-        TriggerClientEvent('QBCore:Notify', src, Config.Notifications.NoPermisionListPlayer, 'error')
     end
 end)

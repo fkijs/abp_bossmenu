@@ -25,7 +25,5 @@ AddEventHandler('bossmenu:getSocietyMoney', function()
         else
             TriggerClientEvent('bossmenu:setSocietyMoney', src, 0)
         end
-    else
-        TriggerClientEvent('QBCore:Notify', src, Config.Notifications.NoPermisionMoneySociety, 'error')
     end
 end)

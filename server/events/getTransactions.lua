@@ -24,7 +24,5 @@ AddEventHandler('bossmenu:getTransactions', function()
                 TriggerClientEvent('bossmenu:setTransactions', src, {})
             end
         end)
-    else
-        TriggerClientEvent('QBCore:Notify', src, Config.Notifications.errortransaction, 'error')
     end
 end)

@@ -22,7 +22,5 @@ AddEventHandler('bossmenu:getPermissions', function()
         end
         debugPrint('Enviando permisos a cliente: ' .. json.encode(employees))
         TriggerClientEvent('bossmenu:setPermissions', src, employees)
-    else
-        TriggerClientEvent('QBCore:Notify', src, Config.Notifications.NoErrorPermision, 'error')
     end
 end)

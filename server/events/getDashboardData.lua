@@ -44,7 +44,5 @@ AddEventHandler('bossmenu:getDashboardData', function()
 
         debugPrint('Enviando datos del dashboard a cliente: ' .. json.encode(dashboardData))
         TriggerClientEvent('bossmenu:setDashboardData', src, dashboardData)
-    else
-        TriggerClientEvent('QBCore:Notify', src, Config.Notifications.NoPermisionDashboard, 'error')
     end
 end)
