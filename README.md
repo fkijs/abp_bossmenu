@@ -17,4 +17,4 @@ ON OX_INVENTORY:
 
 
 
- discord support: 
+ discord support: discord.gg/52FtWJTMrX
