@@ -14,3 +14,7 @@ ON OX_INVENTORY:
 			image = "tuning_laptop.png",
 		}
 	},
+
+
+
+ discord support: 
